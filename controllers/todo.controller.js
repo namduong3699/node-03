@@ -6,8 +6,9 @@ exports.hello = (req, res) => {
 
 exports.create = (req, res) => {
 	//Check request
-	if(!req.body.title) {
+	if (!req.body.title) {
 		return res.status(400).send({
+			success: true, 
 			message: "Todo content can not be empty"
 		});
 	}
@@ -20,9 +21,13 @@ exports.create = (req, res) => {
 	//Save todo to database
 	todo.save()
 		.then(data => {
-			res.send(data);
+			res.send({
+				success: true,
+				data: data
+			});
 		}).catch(err => {
 			res.status(500).send({
+				success: false,
 				message: err.message || 'Error'
 			});
 		});
@@ -34,6 +39,7 @@ exports.findAll = (req, res) => {
 			res.send(todos);
 		}).catch(err => {
 			res.status(500).send({
+				success: false,
 				message: err.message || 'Error'
 			});
 		});
@@ -44,17 +50,23 @@ exports.findOne = (req, res) => {
 		.then(todo => {
 			if (!todo) {
 				return res.status(404).send({
+					success: false,
 					message: 'Todo not found with id ' + req.params.id
 				});
 			}
-			res.send(todo);
+			res.send({
+				success: true,
+				data: todo
+			});
 		}).catch(err => {
 			if (err.kind === 'ObjectId') {
 				return res.status(404).send({
+					success: false,
 					message: 'Todo not found with id ' + req.params.id
 				});
 			}
 			return res.status(500).send({
+				success: false,
 				message: 'Error get todo with id ' + req.params.id
 			});
 		});
@@ -64,6 +76,7 @@ exports.update = (req, res) => {
 	// Validate Request
 	if (!req.body.title) {
 		return res.status(400).send({
+			success: false,
 			message: "Todo content can not be empty"
 		});
 	}
@@ -77,17 +90,23 @@ exports.update = (req, res) => {
 		.then(todo => {
 			if (!todo) {
 				return res.status(404).send({
+					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
 			}
-			res.send(todo);
+			res.send({
+				success: true,
+				data: todo
+			});
 		}).catch(err => {
 			if (err.kind === 'ObjectId') {
 				return res.status(404).send({
+					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
 			}
 			return res.status(500).send({
+				success: false,
 				message: "Error updating todo with id " + req.params.id
 			});
 		});
@@ -98,19 +117,23 @@ exports.delete = (req, res) => {
 		.then(todo => {
 			if (!todo) {
 				return res.status(404).send({
+					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
 			}
 			res.send({
-				message: "Todo deleted successfully!"
+				success: true,
+				data: true
 			});
 		}).catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
 				return res.status(404).send({
+					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
 			}
 			return res.status(500).send({
+				success: false,
 				message: "Could not delete todo with id " + req.params.id
 			});
 		});
