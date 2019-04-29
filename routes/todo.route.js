@@ -9,7 +9,9 @@ module.exports = (app) => {
 
     app.post('/todos/:id', todo.update);
 
-    app.post('/todos/:id/toogle', );
+    app.post('/todos/:id/toogle', (req, res) => {
+        res.send('meow');
+    });
 
-    app.delete('/notes/:id', todo.delete);
+    app.delete('/todos/:id', todo.delete);
 }
