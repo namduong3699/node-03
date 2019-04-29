@@ -8,13 +8,8 @@ exports.create = (req, res) => {
 	//Check request
 	if (!req.body.title) {
 		return res.status(400).send({
-<<<<<<< HEAD
 			success: false, 
 			message: "Todo title can not be empty"
-=======
-			success: true, 
-			message: "Todo content can not be empty"
->>>>>>> 44ef0980707a99570201d47b9823ad06fd4c9d71
 		});
 	}
 
@@ -26,15 +21,9 @@ exports.create = (req, res) => {
 	//Save todo to database
 	todo.save()
 		.then(data => {
-<<<<<<< HEAD
 			res.send({	
 				data: data,
 				success: true
-=======
-			res.send({
-				success: true,
-				data: data
->>>>>>> 44ef0980707a99570201d47b9823ad06fd4c9d71
 			});
 		}).catch(err => {
 			res.status(500).send({
@@ -66,13 +55,8 @@ exports.findOne = (req, res) => {
 				});
 			}
 			res.send({
-<<<<<<< HEAD
 				data: todo,
 				success: true
-=======
-				success: true,
-				data: todo
->>>>>>> 44ef0980707a99570201d47b9823ad06fd4c9d71
 			});
 		}).catch(err => {
 			if (err.kind === 'ObjectId') {
@@ -111,24 +95,8 @@ exports.update = (req, res) => {
 				});
 			}
 			res.send({
-<<<<<<< HEAD
 				data: true,
 				success: true
-=======
-				success: true,
-				data: todo
-			});
-		}).catch(err => {
-			if (err.kind === 'ObjectId') {
-				return res.status(404).send({
-					success: false,
-					message: "Todo not found with id " + req.params.id
-				});
-			}
-			return res.status(500).send({
-				success: false,
-				message: "Error updating todo with id " + req.params.id
->>>>>>> 44ef0980707a99570201d47b9823ad06fd4c9d71
 			});
 		}).catch(err => {
 			res.send({
