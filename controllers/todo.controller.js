@@ -7,7 +7,7 @@ exports.hello = (req, res) => {
 exports.create = (req, res) => {
 	//Check request
 	if (!req.body.title) {
-		return res.status(400).send({
+		return res.send({
 			success: false, 
 			message: "Todo title can not be empty"
 		});
@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 				success: true
 			});
 		}).catch(err => {
-			res.status(500).send({
+			res.send({
 				success: false,
 				message: err.message || 'Error'
 			});
@@ -38,7 +38,7 @@ exports.findAll = (req, res) => {
 		.then(todos => {
 			res.send(todos);
 		}).catch(err => {
-			res.status(500).send({
+			res.send({
 				success: false,
 				message: err.message || 'Error'
 			});
@@ -49,7 +49,7 @@ exports.findOne = (req, res) => {
 	Todo.findById(req.params.id)
 		.then(todo => {
 			if (!todo) {
-				return res.status(404).send({
+				return res.send({
 					success: false,
 					message: 'Todo not found with id ' + req.params.id
 				});
@@ -60,12 +60,12 @@ exports.findOne = (req, res) => {
 			});
 		}).catch(err => {
 			if (err.kind === 'ObjectId') {
-				return res.status(404).send({
+				return res.send({
 					success: false,
 					message: 'Todo not found with id ' + req.params.id
 				});
 			}
-			return res.status(500).send({
+			return res.send({
 				success: false,
 				message: 'Error get todo with id ' + req.params.id
 			});
@@ -75,7 +75,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
 	// Validate Request
 	if (!req.body.title) {
-		return res.status(400).send({
+		return res.send({
 			success: false,
 			message: "Todo content can not be empty"
 		});
@@ -89,7 +89,7 @@ exports.update = (req, res) => {
 		})
 		.then(todo => {
 			if (!todo) {
-				return res.status(404).send({
+				return res.send({
 					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
@@ -110,7 +110,7 @@ exports.delete = (req, res) => {
 	Todo.findByIdAndRemove(req.params.id)
 		.then(todo => {
 			if (!todo) {
-				return res.status(404).send({
+				return res.send({
 					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
@@ -121,12 +121,12 @@ exports.delete = (req, res) => {
 			});
 		}).catch(err => {
 			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
-				return res.status(404).send({
+				return res.send({
 					success: false,
 					message: "Todo not found with id " + req.params.id
 				});
 			}
-			return res.status(500).send({
+			return res.send({
 				success: false,
 				message: "Could not delete todo with id " + req.params.id
 			});
