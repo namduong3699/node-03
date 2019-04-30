@@ -22,7 +22,7 @@ exports.create = (req, res) => {
 	todo.save()
 		.then(data => {
 			res.send({	
-				data: data,
+				data: data.toJSON(),
 				success: true
 			});
 		}).catch(err => {
