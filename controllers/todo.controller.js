@@ -1,14 +1,14 @@
 const Todo = require('../models/todo.model.js');
 
 exports.hello = (req, res) => {
-	res.send('Hello, world!');
+	res.send('Hello, world!' + req.body.hi);
 };
 
 exports.create = (req, res) => {
 	//Check request
 	if (!req.body.title) {
 		return res.send({
-			success: false, 
+			success: false,
 			message: "Todo title can not be empty"
 		});
 	}
@@ -21,8 +21,8 @@ exports.create = (req, res) => {
 	//Save todo to database
 	todo.save()
 		.then(data => {
-			res.send({	
-				data: data.toJSON(),
+			res.send({
+				data: data,
 				success: true
 			});
 		}).catch(err => {
@@ -100,9 +100,9 @@ exports.update = (req, res) => {
 			});
 		}).catch(err => {
 			res.send({
-                success: false,
-                message: err.message
-            });
+				success: false,
+				message: err.message
+			});
 		});
 };
 
