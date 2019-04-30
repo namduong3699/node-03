@@ -36,7 +36,10 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 	Todo.find()
 		.then(todos => {
-			res.send(todos);
+			res.send({
+				data: todos,
+				success: true
+			});
 		}).catch(err => {
 			res.send({
 				success: false,
