@@ -1,7 +1,7 @@
 const Todo = require('../models/todo.model.js');
 
 exports.hello = (req, res) => {
-	res.send('Hello, world!' + req.body.hi);
+	res.send('Hello, world!');
 };
 
 exports.create = (req, res) => {
